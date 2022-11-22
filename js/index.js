@@ -44,6 +44,21 @@ window.addEventListener('DOMContentLoaded', () => {
       o: ['Sydney', 'Canberra', 'Melbourne', 'Perth'],
       a: 1,
     },
+    {
+      q: 'How much of Australia’s population lives on the coast',
+      o: ['25%', '45%', '65%', '85%'],
+      a: 3,
+    },
+    {
+      q: 'How many people live in Melbourne',
+      o: ['3151000', '4151000', '5151000', '6151000'],
+      a: 2,
+    },
+    {
+      q: 'What was the first national park in Australia',
+      o: ['Royal National Park', 'Lamington National Park', 'The Grampians National Park', 'Springbrook National Park'],
+      a: 0,
+    },
   ];
 
   // function to Display the quiz questions and answers from the object
@@ -65,26 +80,74 @@ window.addEventListener('DOMContentLoaded', () => {
 
   // Calculate the score
   const calculateScore = () => {
+    
     let score = 0;
     quizArray.map((quizItem, index) => {
-      for (let i = 0; i < 4; i++) {
+      console.log("111");
+      
+      for (let i = 0; i < 7; i++) {
+        console.log("222");
         //highlight the li if it is the correct answer
-        let li = `li_${index}_${i}`;
-        let r = `radio_${index}_${i}`;
-        liElement = document.querySelector('#' + li);
-        radioElement = document.querySelector('#' + r);
+        let li = `li_${index}_${i}`; // id of li element(option)
+        let r = `radio_${index}_${i}`; //id of input(checked or not)
+        liElement = document.querySelector('#' + li);// find the li option
+        radioElement = document.querySelector('#' + r);//find the input id=r
 
         if (quizItem.a == i) {
           //change background color of li element here
+          radioElement.style.backgroundColor = "red"
+         
         }
 
         if (radioElement.checked) {
           // code for task 1 goes here
-        }
-      }
-    });
-  };
 
+          quizItem.a==i && score++;
+            
+
+        }
+        return score;
+      }
+      return score;
+      
+    });
+    return score;
+  };
+  document.querySelector('#score').value == score;
   // call the displayQuiz function
   displayQuiz();
+
+  // Add an Event listener for the submit button
+  const checkSubmit = document.querySelector('#btnSubmit');
+  checkSubmit.addEventListener('click', calculateScore
+  );
+//add timer
+  
+const timer = document.querySelector("#btnStart");
+let timerInterval;
+
+startTimer = () => {
+    clearInterval(timerInterval);
+    let second = 0,
+        minute = 1;
+
+    timerInterval = setInterval(function () {
+        timer =
+            (minute < 10 ? "0" + minute : minute) + ":" +
+            (second < 10 ? "0" + second : second);
+
+        if (second == 0) {
+            if (minute === 0) {
+                clearInterval(timerInterval);
+                alert("Time is up!");
+            }
+            minute--;
+            second = 60;
+        }
+        second--;
+    }, 1000);};
+
+ 
+
 });
+
