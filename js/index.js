@@ -80,40 +80,44 @@ window.addEventListener('DOMContentLoaded', () => {
 
   // Calculate the score
   const calculateScore = () => {
-    
+    console.log(123);
     let score = 0;
     quizArray.map((quizItem, index) => {
-      console.log("111");
       
-      for (let i = 0; i < 7; i++) {
-        console.log("222");
+      for (let i = 0; i < 4; i++) {
+        console.log("222", i);
+        
         //highlight the li if it is the correct answer
         let li = `li_${index}_${i}`; // id of li element(option)
         let r = `radio_${index}_${i}`; //id of input(checked or not)
         liElement = document.querySelector('#' + li);// find the li option
         radioElement = document.querySelector('#' + r);//find the input id=r
-
+        console.log("333", quizItem.a, i );
         if (quizItem.a == i) {
+
           //change background color of li element here
-          radioElement.style.backgroundColor = "red"
+          liElement.style.backgroundColor = "lightblue"
          
         }
-
+        console.log("444",radioElement.checked);
         if (radioElement.checked) {
+        console.log("555",radioElement.checked);
+
           // code for task 1 goes here
+          if(quizItem.a==i)
+          score++;
 
-          quizItem.a==i && score++;
-            
-
+         
+          console.log("666",score);
         }
-        return score;
       }
-      return score;
       
     });
-    return score;
+    return document.querySelector('#score').textContent = `Your score is ${score}`;
   };
-  document.querySelector('#score').value == score;
+  
+
+  
   // call the displayQuiz function
   displayQuiz();
 
@@ -121,31 +125,44 @@ window.addEventListener('DOMContentLoaded', () => {
   const checkSubmit = document.querySelector('#btnSubmit');
   checkSubmit.addEventListener('click', calculateScore
   );
-//add timer
-  
-const timer = document.querySelector("#btnStart");
-let timerInterval;
 
-startTimer = () => {
-    clearInterval(timerInterval);
-    let second = 0,
-        minute = 1;
+  //reset quiz
 
-    timerInterval = setInterval(function () {
-        timer =
-            (minute < 10 ? "0" + minute : minute) + ":" +
-            (second < 10 ? "0" + second : second);
+  const resetQuiz = document.querySelector('#btnReset');
+  resetQuiz.addEventListener('click', ()=>{
+    
+  displayQuiz();
+  document.querySelector('#score').textContent = '';
 
-        if (second == 0) {
-            if (minute === 0) {
-                clearInterval(timerInterval);
-                alert("Time is up!");
-            }
-            minute--;
-            second = 60;
-        }
-        second--;
-    }, 1000);};
+  })
+
+  //add timer
+
+  startTimer = (minute, second) => {
+
+
+      timerInterval = setInterval(function () {
+          console.log(888);
+          if (second == 0) {
+              if (minute === 0) {
+                  clearInterval(timerInterval);
+                  alert("Time is up!");
+              }
+              minute--;
+              second = 60;
+          }
+          second--;
+          document.querySelector('#time').textContent= `${minute}: ${second}`
+      }, 1000);};
+
+  const timer = document.querySelector("#btnStart");
+   timer.addEventListener('click',()=>{
+    let minute = 1;
+    let second = 0;
+    startTimer(minute, second);
+   } );
+
+
 
  
 
